@@ -44,19 +44,5 @@ module.exports = withPlugins(
       ]
       return config
     },
-    i18n: {
-      locales: ['en', 'es'],
-      defaultLocale: 'en',
-      domains: [
-        {
-          domain: 'app.proofofintegrity.org',
-          defaultLocale: 'en',
-        },
-        {
-          domain: 'es.app.proofofintegrity.org',
-          defaultLocale: 'nl-NL',
-        },
-      ],
-    },
   }
 )
