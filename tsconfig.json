@@ -24,6 +24,7 @@
       "@config": ["./config"],
       "@config/*": ["./config/*"],
       "@constants": ["./constants"],
+      "@context": ["./context"],
       "@constants/*": ["./constants/*"],
       "@i18n": ["./i18n"],
       "@hooks": ["./hooks"],
