@@ -7,7 +7,7 @@
 
     ```sh
     $ git clone https://github.com/dmazzitelli2013/challenge_frontend
-    $ cd ubi
+    $ cd challenge_frontend
     ```
 
 2. Install Dependencies
