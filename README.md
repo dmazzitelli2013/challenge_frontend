@@ -6,7 +6,7 @@
 1. Clone Repository
 
     ```sh
-    $ git clone https://github.com/dmazzitelli2013/challenge_frontend
+    $ git clone https://github.com/dmazzitelli2013/challenge_frontend.git
     $ cd challenge_frontend
     ```
 
