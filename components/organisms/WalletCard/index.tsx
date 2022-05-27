@@ -10,7 +10,6 @@ interface IWalletData {
 }
 
 const WalletCard = ({ data }: IWalletData) => {
-  console.log(data)
   const { isDesktop } = useBreakpoint()
   const [isBalanceLoading, setBalanceLoading] = useState(true)
   const [isFavoriteLoading, setFavoriteLoading] = useState(false)
