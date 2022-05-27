@@ -2,8 +2,8 @@ import type { NextPage } from 'next'
 import { ReactNode } from 'react'
 import { VStack, HStack, Input, Text, Button } from 'native-base'
 import { BaseLayout } from '@components/templates'
+import { WalletList } from '@components/organisms'
 import { useBreakpoint } from '@hooks'
-import { WalletContainer } from '@components/organisms'
 
 interface IAddWalletWrapper {
   children: ReactNode
@@ -45,18 +45,7 @@ const Home: NextPage = () => {
           Add Wallet
         </Button>
       </AddWalletWrapper>
-      <VStack mt={12} space={8} alignItems="center" pb={8}>
-        <WalletContainer />
-        <WalletContainer />
-        <WalletContainer />
-        <WalletContainer />
-        <WalletContainer />
-        <WalletContainer />
-        <WalletContainer />
-        <WalletContainer />
-        <WalletContainer />
-        <WalletContainer />
-      </VStack>
+      <WalletList />
     </BaseLayout>
   )
 }

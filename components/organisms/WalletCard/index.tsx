@@ -1,8 +1,13 @@
 import { HStack, VStack, Text, WarningIcon } from 'native-base'
 import { FavoriteButton } from '@components/molecules'
 import { useBreakpoint } from '@hooks'
+import { Wallet } from '@services/API/types'
 
-const WalletContainer = () => {
+interface IWalletData {
+  data: Wallet
+}
+
+const WalletCard = ({ data } : IWalletData) => {
   const { isDesktop } = useBreakpoint()
   return (
     <VStack>
@@ -38,7 +43,7 @@ const WalletContainer = () => {
             <Text fontSize={{ base: 'md', lg: 'xl' }}>Wallet Address:</Text>
           )}
           <Text fontSize={{ base: 'xs', lg: 'xl' }}>
-            0x75810fd7c43D9357696E45652C5DFc92D06925C2
+            {data.address}
           </Text>
           <HStack flex="auto" justifyContent="flex-end">
             <FavoriteButton size={{ base: 4, lg: 6 }} mt={0.5} />
@@ -55,4 +60,4 @@ const WalletContainer = () => {
   )
 }
 
-export default WalletContainer
+export default WalletCard

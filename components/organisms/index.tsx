@@ -1,1 +1,2 @@
-export { default as WalletContainer } from './WalletContainer'
+export { default as WalletCard } from './WalletCard'
+export { default as WalletList } from './WalletList'
