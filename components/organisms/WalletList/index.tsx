@@ -20,7 +20,7 @@ const WalletList = () => {
     <VStack mt={12} space={8} alignItems="center" pb={8}>
       {isLoading ? (
         <HStack space={2} justifyContent="center">
-          <Spinner accessibilityLabel="Loading posts" />
+          <Spinner accessibilityLabel="Loading wallets" />
           <Heading color="primary.500" fontSize="md">
             Loading
           </Heading>

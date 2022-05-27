@@ -8,6 +8,13 @@ const APIGetWallets = async (): Promise<Wallet[]> => {
     .catch(() => [])
 }
 
+const APIToggleFavorite = async (wallet: Wallet): Promise<Wallet | null> => {
+  const fullURL = `${APIConfig.API_URL}/wallets/${wallet.isFavorite ? 'unfavorite' : 'favorite'}/${wallet.id}`
+  return fetch(fullURL, { method: 'PUT' })
+    .then((response) => response.json())
+    .catch(() => null)
+}
+
 const EtherscanAPIGetETHBalance = async (address: string): Promise<string> => {
   const fullURL = `${APIConfig.ETHERSCAN_API_URL}/api?module=account&action=balance&address=${address}&tag=latest&apikey=${APIConfig.ETHERSCAN_API_KEY}`
   return fetch(fullURL)
@@ -25,4 +32,4 @@ const EtherscanAPIGetETHBalance = async (address: string): Promise<string> => {
     .catch(() => '0')
 }
 
-export { APIGetWallets, EtherscanAPIGetETHBalance }
+export { APIGetWallets, APIToggleFavorite, EtherscanAPIGetETHBalance }

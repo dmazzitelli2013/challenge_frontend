@@ -3,7 +3,7 @@ import { FavoriteButton } from '@components/molecules'
 import { useBreakpoint } from '@hooks'
 import { Wallet } from '@services/API/types'
 import { useEffect, useState } from 'react'
-import { EtherscanAPIGetETHBalance } from '@services/API'
+import { APIToggleFavorite, EtherscanAPIGetETHBalance } from '@services/API'
 
 interface IWalletData {
   data: Wallet
@@ -12,6 +12,22 @@ interface IWalletData {
 const WalletCard = ({ data }: IWalletData) => {
   const { isDesktop } = useBreakpoint()
   const [isBalanceLoading, setBalanceLoading] = useState(true)
+  const [isFavoriteLoading, setFavoriteLoading] = useState(false)
+  const [isFavorite, setFavorite] = useState(data.isFavorite)
+
+  const updateFavorite = (favorite: boolean) => {
+    data.isFavorite = favorite
+    setFavorite(favorite)
+  }
+
+  const toggleFavorite = async () => {
+    setFavoriteLoading(true)
+    const result = await APIToggleFavorite(data)
+    if (result) {
+      updateFavorite(result.isFavorite)
+    }
+    setFavoriteLoading(false)
+  }
 
   useEffect(() => {
     ;(async () => {
@@ -55,11 +71,17 @@ const WalletCard = ({ data }: IWalletData) => {
           )}
           <Text fontSize={{ base: 'xs', lg: 'xl' }}>{data.address}</Text>
           <HStack flex="auto" justifyContent="flex-end">
-            <FavoriteButton size={{ base: 4, lg: 6 }} mt={0.5} />
+            <FavoriteButton
+              action={toggleFavorite}
+              isLoading={isFavoriteLoading}
+              isFavorite={isFavorite}
+              size={{ base: 4, lg: 6 }}
+              mt={0.5}
+            />
           </HStack>
         </HStack>
         {isBalanceLoading ? (
-          <Spinner accessibilityLabel="Loading posts" />
+          <Spinner accessibilityLabel="Loading balance" />
         ) : (
           <Text fontSize={{ base: 'xl', lg: '3xl' }} bold alignSelf="center">
             {data.balance} ETH

@@ -1,14 +1,31 @@
-import { useState } from 'react'
-import { IIconProps, Pressable, FavouriteIcon } from 'native-base'
+import { IIconProps, Pressable, FavouriteIcon, Spinner } from 'native-base'
 
-const FavoriteButton = ({ size, mt, ...props }: IIconProps) => {
-  const [isFavorite, setFavorite] = useState(false)
-  const toggleIsFavorite = () => setFavorite(!isFavorite)
-  return (
-    <Pressable onPress={toggleIsFavorite}>
-      <FavouriteIcon size={size} mt={mt} {...props} color={isFavorite ? "red.600" : "white"} />
-    </Pressable>
-  )
+interface IFavoriteButtonProps extends IIconProps {
+  action?: any
+  isLoading: boolean
+  isFavorite: boolean
 }
+
+const FavoriteButton = ({
+  action,
+  isLoading,
+  isFavorite,
+  size,
+  mt,
+  ...props
+}: IFavoriteButtonProps) => (
+  <Pressable onPress={action} size={size}>
+    {isLoading ? (
+      <Spinner accessibilityLabel="Loading favorite" />
+    ) : (
+      <FavouriteIcon
+        size={size}
+        mt={mt}
+        {...props}
+        color={isFavorite ? 'red.600' : 'white'}
+      />
+    )}
+  </Pressable>
+)
 
 export default FavoriteButton
