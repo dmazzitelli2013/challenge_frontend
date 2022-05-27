@@ -4,14 +4,17 @@ import { WalletCard } from '@components/organisms'
 import { APIGetWallets } from '@services/API'
 import { Wallet } from '@services/API/types'
 
-let data: Wallet[] = []
+interface IWalletList {
+  data: Wallet[]
+}
 
-const WalletList = () => {
+const WalletList = ({ data }: IWalletList) => {
   const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
     ;(async () => {
-      data = await APIGetWallets()
+      const fetchedData = await APIGetWallets()
+      fetchedData.forEach((wallet) => data.push(wallet))
       setLoading(false)
     })()
   }, [])

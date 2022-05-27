@@ -1,6 +1,19 @@
 import APIConfig from '@constants/api.constants'
 import { Wallet } from './types'
 
+const APIAddWallet = async (inputAddress: string): Promise<Wallet | Error> => {
+  const fullURL = `${APIConfig.API_URL}/wallets`
+  return fetch(fullURL, {
+    method: 'POST',
+    body: JSON.stringify({ address: inputAddress }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .catch((error) => error)
+}
+
 const APIGetWallets = async (): Promise<Wallet[]> => {
   const fullURL = `${APIConfig.API_URL}/wallets`
   return fetch(fullURL)
@@ -9,7 +22,9 @@ const APIGetWallets = async (): Promise<Wallet[]> => {
 }
 
 const APIToggleFavorite = async (wallet: Wallet): Promise<Wallet | null> => {
-  const fullURL = `${APIConfig.API_URL}/wallets/${wallet.isFavorite ? 'unfavorite' : 'favorite'}/${wallet.id}`
+  const fullURL = `${APIConfig.API_URL}/wallets/${
+    wallet.isFavorite ? 'unfavorite' : 'favorite'
+  }/${wallet.id}`
   return fetch(fullURL, { method: 'PUT' })
     .then((response) => response.json())
     .catch(() => null)
@@ -32,4 +47,9 @@ const EtherscanAPIGetETHBalance = async (address: string): Promise<string> => {
     .catch(() => '0')
 }
 
-export { APIGetWallets, APIToggleFavorite, EtherscanAPIGetETHBalance }
+export {
+  APIAddWallet,
+  APIGetWallets,
+  APIToggleFavorite,
+  EtherscanAPIGetETHBalance,
+}
