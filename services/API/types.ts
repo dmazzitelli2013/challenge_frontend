@@ -1,7 +1,7 @@
 interface Wallet {
   id: number
   address: string
-  oldestTransactionDate?: Date
+  oldestTransactionDate?: string
   isFavorite: boolean
   createdAt: Date
   updatedAt: Date

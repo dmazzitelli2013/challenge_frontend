@@ -10,6 +10,7 @@ interface IWalletData {
 }
 
 const WalletCard = ({ data }: IWalletData) => {
+  console.log(data)
   const { isDesktop } = useBreakpoint()
   const [isBalanceLoading, setBalanceLoading] = useState(true)
   const [isFavoriteLoading, setFavoriteLoading] = useState(false)
@@ -29,6 +30,16 @@ const WalletCard = ({ data }: IWalletData) => {
     setFavoriteLoading(false)
   }
 
+  const isOld = (): boolean => {
+    if (data.oldestTransactionDate) {
+      const transactionDate = new Date(Date.parse(data.oldestTransactionDate))
+      const diffTime = new Date().getTime() - transactionDate.getTime()
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+      return diffDays > 365
+    }
+    return false
+  }
+
   useEffect(() => {
     ;(async () => {
       data.balance = await EtherscanAPIGetETHBalance(data.address)
@@ -38,21 +49,23 @@ const WalletCard = ({ data }: IWalletData) => {
 
   return (
     <VStack>
-      <HStack
-        w="fit-content"
-        background="red.200"
-        p={1.5}
-        ml={2}
-        alignItems="center"
-        space={2}
-        borderTopRadius={12}
-        borderBottomRadius={0}
-      >
-        <WarningIcon color="red.900" size={3} />
-        <Text bold color="red.900" fontSize={{ base: 'xs', lg: 'md' }}>
-          This wallet is old!
-        </Text>
-      </HStack>
+      {isOld() && (
+        <HStack
+          w="fit-content"
+          background="red.200"
+          p={1.5}
+          ml={2}
+          alignItems="center"
+          space={2}
+          borderTopRadius={12}
+          borderBottomRadius={0}
+        >
+          <WarningIcon color="red.900" size={3} />
+          <Text bold color="red.900" fontSize={{ base: 'xs', lg: 'md' }}>
+            This wallet is old!
+          </Text>
+        </HStack>
+      )}
       <VStack
         w="100%"
         maxW="1024px"
