@@ -87,6 +87,7 @@ module.exports = {
     'react-native/split-platform-components': 'warn',
     'react-native/no-single-element-style-arrays': 'error',
     'react/no-unstable-nested-components': 'warn',
+    'no-param-reassign': ['error', { props: false }],
   },
   globals: {
     JSX: true,

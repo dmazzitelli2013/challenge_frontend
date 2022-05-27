@@ -1,14 +1,25 @@
-import { HStack, VStack, Text, WarningIcon } from 'native-base'
+import { HStack, VStack, Text, WarningIcon, Spinner } from 'native-base'
 import { FavoriteButton } from '@components/molecules'
 import { useBreakpoint } from '@hooks'
 import { Wallet } from '@services/API/types'
+import { useEffect, useState } from 'react'
+import { EtherscanAPIGetETHBalance } from '@services/API'
 
 interface IWalletData {
   data: Wallet
 }
 
-const WalletCard = ({ data } : IWalletData) => {
+const WalletCard = ({ data }: IWalletData) => {
   const { isDesktop } = useBreakpoint()
+  const [isBalanceLoading, setBalanceLoading] = useState(true)
+
+  useEffect(() => {
+    ;(async () => {
+      data.balance = await EtherscanAPIGetETHBalance(data.address)
+      setBalanceLoading(false)
+    })()
+  }, [])
+
   return (
     <VStack>
       <HStack
@@ -42,16 +53,18 @@ const WalletCard = ({ data } : IWalletData) => {
           {isDesktop && (
             <Text fontSize={{ base: 'md', lg: 'xl' }}>Wallet Address:</Text>
           )}
-          <Text fontSize={{ base: 'xs', lg: 'xl' }}>
-            {data.address}
-          </Text>
+          <Text fontSize={{ base: 'xs', lg: 'xl' }}>{data.address}</Text>
           <HStack flex="auto" justifyContent="flex-end">
             <FavoriteButton size={{ base: 4, lg: 6 }} mt={0.5} />
           </HStack>
         </HStack>
-        <Text fontSize={{ base: 'xl', lg: '3xl' }} bold alignSelf="center">
-          2.72 ETH
-        </Text>
+        {isBalanceLoading ? (
+          <Spinner accessibilityLabel="Loading posts" />
+        ) : (
+          <Text fontSize={{ base: 'xl', lg: '3xl' }} bold alignSelf="center">
+            {data.balance} ETH
+          </Text>
+        )}
         <HStack>
           <Text>USD / EUR</Text>
         </HStack>

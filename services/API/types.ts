@@ -5,6 +5,7 @@ interface Wallet {
   isFavorite: boolean
   createdAt: Date
   updatedAt: Date
+  balance?: string
 }
 
 export type { Wallet }

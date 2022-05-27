@@ -1,5 +1,7 @@
 const APIConfig = {
-  API_URL: process.env.NEXT_PUBLIC_API_URL
+  API_URL: process.env.NEXT_PUBLIC_API_URL,
+  ETHERSCAN_API_URL: process.env.NEXT_PUBLIC_ETHERSCAN_API_URL,
+  ETHERSCAN_API_KEY: process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY
 }
 
 export default APIConfig
