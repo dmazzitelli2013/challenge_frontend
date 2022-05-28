@@ -1,10 +1,10 @@
 import type { NextPage } from 'next'
-import { ReactNode, useState } from 'react'
+import { ReactNode, useContext, useState } from 'react'
 import { VStack, HStack, Input, Text, Button, Spinner } from 'native-base'
 import { BaseLayout } from '@components/templates'
 import { WalletList } from '@components/organisms'
 import { useBreakpoint } from '@hooks'
-import { APIAddWallet } from '@services/API'
+import { AppDataContext } from '@context'
 
 interface IAddWalletWrapper {
   children: ReactNode
@@ -31,30 +31,23 @@ const AddWalletWrapper = ({ children, isDesktop }: IAddWalletWrapper) => {
 }
 
 const Home: NextPage = () => {
+  const appDataContext = useContext(AppDataContext)
+  const { addWallet, addWalletIsLoading } = appDataContext
   const { isDesktop } = useBreakpoint()
   const [walletValue, setWalletValue] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
-  const [isLoading, setLoading] = useState(false)
 
   const showErrorMessage = errorMessage.length > 0
   const handleChange = (event: any) => setWalletValue(event.target.value)
 
-  /* const addWallet = async () => {
-    setLoading(true)
-    const response = await APIAddWallet(walletValue)
-    if ('message' in response) {
-      if (Array.isArray(response.message) && response.message.length > 0) {
-        setErrorMessage(response.message[0])
-      } else {
-        setErrorMessage(response.message)
-      }
+  const addNewWallet = async () => {
+    const response = await addWallet(walletValue)
+    if (typeof response === 'string') {
+      setErrorMessage(response)
     } else {
-      walletsData.unshift(response)
-      setWalletValue('')
       setErrorMessage('')
     }
-    setLoading(false)
-  } */
+  }
 
   return (
     <BaseLayout>
@@ -71,13 +64,13 @@ const Home: NextPage = () => {
           />
           {showErrorMessage && <Text color="red.600">{errorMessage}</Text>}
         </VStack>
-        {isLoading ? (
+        {addWalletIsLoading ? (
           <Spinner accessibilityLabel="Loading wallet" />
         ) : (
           <Button
             maxW="200px"
             fontSize={{ base: 'xs', lg: 'md' }}
-            // onPress={addWallet}
+            onPress={addNewWallet}
             disabled={walletValue.length === 0}
           >
             Add Wallet
