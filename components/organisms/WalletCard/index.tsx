@@ -1,5 +1,6 @@
 import { HStack, VStack, Text, WarningIcon, Spinner } from 'native-base'
-import { FavoriteButton, PriceQuoteSelector } from '@components/molecules'
+import { FavoriteButton } from '@components/molecules'
+import { PriceQuoteSelector } from '@components/organisms'
 import { useBreakpoint } from '@hooks'
 import { Wallet } from '@services/API/types'
 import { useEffect, useState } from 'react'

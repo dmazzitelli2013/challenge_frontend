@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import { ReactNode, useContext, useState } from 'react'
 import { VStack, HStack, Input, Text, Button, Spinner } from 'native-base'
 import { BaseLayout } from '@components/templates'
-import { WalletList } from '@components/organisms'
+import { PriceList, WalletList } from '@components/organisms'
 import { useBreakpoint } from '@hooks'
 import { AppDataContext } from '@context'
 
@@ -77,6 +77,7 @@ const Home: NextPage = () => {
           </Button>
         )}
       </AddWalletWrapper>
+      <PriceList />
       <WalletList />
     </BaseLayout>
   )

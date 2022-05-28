@@ -7,6 +7,7 @@ interface IAppDataContextValue {
   priceQuotes: PriceQuote[]
   addWallet(address: string): any
   addWalletIsLoading: boolean
+  updatePriceQuote(id: number, value: number): any
 }
 
 const defaultValue: IAppDataContextValue = {
@@ -14,7 +15,8 @@ const defaultValue: IAppDataContextValue = {
   wallets: [],
   priceQuotes: [],
   addWallet: () => {},
-  addWalletIsLoading: false
+  addWalletIsLoading: false,
+  updatePriceQuote: () => {}
 }
 
 const AppDataContext = createContext<IAppDataContextValue>(defaultValue)

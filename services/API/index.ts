@@ -30,16 +30,32 @@ const APIToggleFavorite = async (wallet: Wallet): Promise<Wallet | null> => {
     .catch(() => null)
 }
 
-const APIGetPriceQuotes = async(): Promise<PriceQuote[]> => {
+const APIGetPriceQuotes = async (): Promise<PriceQuote[]> => {
   const fullURL = `${APIConfig.API_URL}/price-quotes`
   return fetch(fullURL)
     .then((response) => response.json())
     .catch(() => [])
 }
 
-const APIGetETHPriceQuotes = async(): Promise<PriceQuote[]> => {
+const APIGetETHPriceQuotes = async (): Promise<PriceQuote[]> => {
   const priceQuotes = await APIGetPriceQuotes()
   return priceQuotes.filter((priceQuote) => priceQuote.token === 'ETH')
+}
+
+const APIUpdatePriceQuote = async (
+  id: number,
+  price: number
+): Promise<PriceQuote> => {
+  const fullURL = `${APIConfig.API_URL}/price-quotes/${id}`
+  return fetch(fullURL, {
+    method: 'PUT',
+    body: JSON.stringify({ price }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .catch(() => null)
 }
 
 const EtherscanAPIGetETHBalance = async (address: string): Promise<string> => {
@@ -65,5 +81,6 @@ export {
   APIToggleFavorite,
   APIGetPriceQuotes,
   APIGetETHPriceQuotes,
+  APIUpdatePriceQuote,
   EtherscanAPIGetETHBalance,
 }

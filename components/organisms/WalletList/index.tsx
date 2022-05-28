@@ -8,7 +8,7 @@ const WalletList = () => {
   const { isLoadingWallets, wallets } = appDataContext 
 
   return (
-    <VStack mt={12} space={8} alignItems="center" pb={8}>
+    <VStack mt={10} space={8} alignItems="center" pb={8}>
       {isLoadingWallets ? (
         <HStack space={2} justifyContent="center">
           <Spinner accessibilityLabel="Loading wallets" />

@@ -5,13 +5,14 @@ import {
   APIAddWallet,
   APIGetETHPriceQuotes,
   APIGetWallets,
+  APIUpdatePriceQuote,
 } from '@services/API'
 
 const ClientAppDataProvider: React.FC = ({ children }) => {
   const [fetchedWallets, setWallets] = useState([] as Wallet[])
   const [isLoading, setIsLoading] = useState(true)
   const [fetchedPriceQuotes, setPriceQuotes] = useState([] as PriceQuote[])
-  const [addWalletLoading, setAddWalletLoading] = useState(false)
+  const [addWalletIsLoading, setAddWalletIsLoading] = useState(false)
 
   useEffect(() => {
     ;(async () => {
@@ -39,15 +40,36 @@ const ClientAppDataProvider: React.FC = ({ children }) => {
     return response
   }
 
-  const addNewWallet = async (address: string) => {
-    setAddWalletLoading(true)
+  const addWallet = async (address: string) => {
+    setAddWalletIsLoading(true)
     const result = await callAPIAddWallet(address)
     if (typeof result !== 'string') {
       const wallets = [result].concat(fetchedWallets)
       setWallets(wallets)
     }
-    setAddWalletLoading(false)
+    setAddWalletIsLoading(false)
     return result
+  }
+
+  const callAPIUpdatePriceQuote = async (id: number, newPrice: number) => APIUpdatePriceQuote(id, newPrice)
+
+  const updatePriceQuote = async (id: number, newPrice: number) => {
+    const updatePriceQuotes = fetchedPriceQuotes.map((priceQuote) => {
+      if (priceQuote.id === id) {
+        const newPriceQuote: PriceQuote = {
+          id: priceQuote.id,
+          token: priceQuote.token,
+          currency: priceQuote.currency,
+          price: newPrice,
+          createdAt: priceQuote.createdAt,
+          updatedAt: priceQuote.updatedAt,
+        }
+        return newPriceQuote
+      }
+      return priceQuote
+    })
+    setPriceQuotes(updatePriceQuotes)
+    callAPIUpdatePriceQuote(id, newPrice)
   }
 
   return (
@@ -57,8 +79,9 @@ const ClientAppDataProvider: React.FC = ({ children }) => {
         isLoadingWallets: isLoading,
         wallets: fetchedWallets,
         priceQuotes: fetchedPriceQuotes,
-        addWallet: addNewWallet,
-        addWalletIsLoading: addWalletLoading,
+        addWallet,
+        addWalletIsLoading,
+        updatePriceQuote,
       }}
     >
       {children}
