@@ -1,6 +1,6 @@
-import { NativeBaseProvider } from 'native-base'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
+import { NativeBaseProvider } from 'native-base'
 import { useEffect, useState } from 'react'
 import { BreakpointProvider } from '@providers'
 import AppDataProvider from '@providers/appdata/appdata.provider'
