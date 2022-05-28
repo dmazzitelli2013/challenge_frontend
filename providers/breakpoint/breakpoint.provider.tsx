@@ -1,6 +1,6 @@
 import { useBreakpointValue } from 'native-base'
 import React from 'react'
-import { BreakpointContext } from '../context'
+import { BreakpointContext } from '@context'
 
 const ClientBreakpointProvider: React.FC = ({ children }) => {
   const breakpoints = useBreakpointValue({

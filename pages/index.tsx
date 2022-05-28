@@ -12,7 +12,7 @@ interface IAddWalletWrapper {
   isDesktop: boolean
 }
 
-const data: Wallet[] = []
+const walletsData: Wallet[] = []
 
 const AddWalletWrapper = ({ children, isDesktop }: IAddWalletWrapper) => {
   if (isDesktop)
@@ -52,7 +52,7 @@ const Home: NextPage = () => {
         setErrorMessage(response.message)
       }
     } else {
-      data.unshift(response)
+      walletsData.unshift(response)
       setWalletValue('')
       setErrorMessage('')
     }
@@ -87,7 +87,7 @@ const Home: NextPage = () => {
           </Button>
         )}
       </AddWalletWrapper>
-      <WalletList data={data} />
+      <WalletList data={walletsData} />
     </BaseLayout>
   )
 }

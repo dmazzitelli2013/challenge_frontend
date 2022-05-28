@@ -3,9 +3,18 @@ interface Wallet {
   address: string
   oldestTransactionDate?: string
   isFavorite: boolean
-  createdAt: Date
-  updatedAt: Date
+  createdAt: string
+  updatedAt: string
   balance?: string
 }
 
-export type { Wallet }
+interface PriceQuote {
+  id: number
+  token: string
+  currency: string
+  price: number
+  createdAt: string
+  updatedAt: string
+}
+
+export type { Wallet, PriceQuote }

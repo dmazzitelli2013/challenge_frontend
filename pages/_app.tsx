@@ -2,7 +2,8 @@ import { NativeBaseProvider } from 'native-base'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
-import BreakpointProvider from '@providers/breakpoint.provider'
+import { BreakpointProvider } from '@providers'
+import AppDataProvider from '@providers/appdata/appdata.provider'
 
 const styleObject = {
   display: 'flex',
@@ -28,7 +29,9 @@ const App = ({ Component, pageProps }: AppProps) => {
       <NativeBaseProvider>
         {loaded ? (
           <BreakpointProvider>
-            <Component {...pageProps} />
+            <AppDataProvider>
+              <Component {...pageProps} />
+            </AppDataProvider>
           </BreakpointProvider>
         ) : (
           <div style={styleObject}>

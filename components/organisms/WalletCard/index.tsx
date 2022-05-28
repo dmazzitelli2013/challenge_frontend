@@ -1,5 +1,5 @@
 import { HStack, VStack, Text, WarningIcon, Spinner } from 'native-base'
-import { FavoriteButton } from '@components/molecules'
+import { FavoriteButton, PriceQuoteSelector } from '@components/molecules'
 import { useBreakpoint } from '@hooks'
 import { Wallet } from '@services/API/types'
 import { useEffect, useState } from 'react'
@@ -99,9 +99,7 @@ const WalletCard = ({ data }: IWalletData) => {
             {data.balance} ETH
           </Text>
         )}
-        <HStack>
-          <Text>USD / EUR</Text>
-        </HStack>
+        <PriceQuoteSelector />
       </VStack>
     </VStack>
   )

@@ -31,7 +31,10 @@ const WalletList = ({ data }: IWalletList) => {
       ) : (
         <>
           {data.map((wallet) => (
-            <WalletCard key={wallet.id} data={wallet} />
+            <WalletCard
+              key={wallet.id}
+              data={wallet}
+            />
           ))}
         </>
       )}
