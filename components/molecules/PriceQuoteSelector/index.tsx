@@ -2,7 +2,11 @@ import { HStack, Select, Text } from 'native-base'
 import { useContext, useState } from 'react'
 import { AppDataContext } from '@context'
 
-const PriceQuoteSelector = () => {
+interface IPriceQuoteSelector {
+  ethBalance?: string
+}
+
+const PriceQuoteSelector = ({ ethBalance }: IPriceQuoteSelector) => {
   const appDataContext = useContext(AppDataContext)
   const { priceQuotes } = appDataContext
 
@@ -10,12 +14,29 @@ const PriceQuoteSelector = () => {
   if (priceQuotes && priceQuotes.length > 0) {
     defaultCurrency = priceQuotes[0].currency
   }
+
   const [selectedCurrency, setSelectedCurrency] = useState(defaultCurrency)
-  const [balance, setBalance] = useState(0)
+
+  const getETHPrice = () => {
+    const selectedPriceQuote = priceQuotes.find(
+      (priceQuote) => priceQuote.currency === selectedCurrency
+    )
+    return selectedPriceQuote?.price
+  }
+
+  const calculateCurrencyBalance = () => {
+    const price = getETHPrice()
+    if (ethBalance && price) {
+      return (parseFloat(ethBalance) * price).toFixed(2)
+    }
+    return '0'
+  }
+
+  const [balance, setBalance] = useState(calculateCurrencyBalance())
 
   const updateSelectedCurrency = (value: string) => {
     setSelectedCurrency(value)
-    setBalance(100)
+    setBalance(calculateCurrencyBalance())
   }
 
   return (
@@ -25,6 +46,7 @@ const PriceQuoteSelector = () => {
           minWidth="100px"
           maxWidth="100px"
           mt="1"
+          placeholder="Currency"
           selectedValue={selectedCurrency}
           onValueChange={updateSelectedCurrency}
         >

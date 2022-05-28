@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { AppDataContext } from '@context'
 import { PriceQuote } from '@services/API/types'
-import { APIGetPriceQuotes } from '@services/API'
+import { APIGetETHPriceQuotes } from '@services/API'
 
 const ClientAppDataProvider: React.FC = ({ children }) => {
   const [fetchedPriceQuotes, setPriceQuotes] = useState([] as PriceQuote[])
 
   useEffect(() => {
     ;(async () => {
-      const data = await APIGetPriceQuotes()
+      const data = await APIGetETHPriceQuotes()
       setPriceQuotes(data)
     })()
   }, [])

@@ -37,6 +37,11 @@ const APIGetPriceQuotes = async(): Promise<PriceQuote[]> => {
     .catch(() => [])
 }
 
+const APIGetETHPriceQuotes = async(): Promise<PriceQuote[]> => {
+  const priceQuotes = await APIGetPriceQuotes()
+  return priceQuotes.filter((priceQuote) => priceQuote.token === 'ETH')
+}
+
 const EtherscanAPIGetETHBalance = async (address: string): Promise<string> => {
   const fullURL = `${APIConfig.ETHERSCAN_API_URL}/api?module=account&action=balance&address=${address}&tag=latest&apikey=${APIConfig.ETHERSCAN_API_KEY}`
   return fetch(fullURL)
@@ -59,5 +64,6 @@ export {
   APIGetWallets,
   APIToggleFavorite,
   APIGetPriceQuotes,
+  APIGetETHPriceQuotes,
   EtherscanAPIGetETHBalance,
 }

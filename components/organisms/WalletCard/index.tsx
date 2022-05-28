@@ -99,7 +99,7 @@ const WalletCard = ({ data }: IWalletData) => {
             {data.balance} ETH
           </Text>
         )}
-        <PriceQuoteSelector />
+        <PriceQuoteSelector ethBalance={data.balance} />
       </VStack>
     </VStack>
   )
