@@ -12,6 +12,7 @@ interface IWalletData {
 const WalletCard = ({ data }: IWalletData) => {
   const { isDesktop } = useBreakpoint()
   const [isBalanceLoading, setBalanceLoading] = useState(true)
+  const [balance, setBalance] = useState('0')
   const [isFavoriteLoading, setFavoriteLoading] = useState(false)
   const [isFavorite, setFavorite] = useState(data.isFavorite)
 
@@ -41,7 +42,7 @@ const WalletCard = ({ data }: IWalletData) => {
 
   useEffect(() => {
     ;(async () => {
-      data.balance = await EtherscanAPIGetETHBalance(data.address)
+      setBalance(await EtherscanAPIGetETHBalance(data.address))
       setBalanceLoading(false)
     })()
   }, [])
@@ -96,10 +97,10 @@ const WalletCard = ({ data }: IWalletData) => {
           <Spinner accessibilityLabel="Loading balance" />
         ) : (
           <Text fontSize={{ base: 'xl', lg: '3xl' }} bold alignSelf="center">
-            {data.balance} ETH
+            {balance} ETH
           </Text>
         )}
-        <PriceQuoteSelector ethBalance={data.balance} />
+        <PriceQuoteSelector ethBalance={balance} />
       </VStack>
     </VStack>
   )

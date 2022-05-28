@@ -32,11 +32,8 @@ const PriceQuoteSelector = ({ ethBalance }: IPriceQuoteSelector) => {
     return '0'
   }
 
-  const [balance, setBalance] = useState(calculateCurrencyBalance())
-
   const updateSelectedCurrency = (value: string) => {
     setSelectedCurrency(value)
-    setBalance(calculateCurrencyBalance())
   }
 
   return (
@@ -60,7 +57,7 @@ const PriceQuoteSelector = ({ ethBalance }: IPriceQuoteSelector) => {
         </Select>
       )}
       <Text fontSize={{ base: 'md', lg: 'xl' }} bold>
-        {balance} {selectedCurrency}
+        {calculateCurrencyBalance()} {selectedCurrency}
       </Text>
     </HStack>
   )

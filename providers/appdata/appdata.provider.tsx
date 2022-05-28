@@ -1,10 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { AppDataContext } from '@context'
-import { PriceQuote } from '@services/API/types'
-import { APIGetETHPriceQuotes } from '@services/API'
+import { PriceQuote, Wallet } from '@services/API/types'
+import { APIGetETHPriceQuotes, APIGetWallets } from '@services/API'
 
 const ClientAppDataProvider: React.FC = ({ children }) => {
+  const [fetchedWallets, setWallets] = useState([] as Wallet[])
+  const [isLoading, setIsLoading] = useState(true)
   const [fetchedPriceQuotes, setPriceQuotes] = useState([] as PriceQuote[])
+
+  useEffect(() => {
+    ;(async () => {
+      const fetchedData = await APIGetWallets()
+      setWallets(fetchedData)
+      setIsLoading(false)
+    })()
+  }, [])
 
   useEffect(() => {
     ;(async () => {
@@ -15,7 +25,7 @@ const ClientAppDataProvider: React.FC = ({ children }) => {
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <AppDataContext.Provider value={{ priceQuotes: fetchedPriceQuotes }}>
+    <AppDataContext.Provider value={{ isLoadingWallets: isLoading, wallets: fetchedWallets, priceQuotes: fetchedPriceQuotes }}>
       {children}
     </AppDataContext.Provider>
   )

@@ -1,11 +1,15 @@
 import { createContext } from 'react'
-import { PriceQuote } from '@services/API/types'
+import { PriceQuote, Wallet } from '@services/API/types'
 
 interface IAppDataContextValue {
+  isLoadingWallets: boolean
+  wallets: Wallet[]
   priceQuotes: PriceQuote[]
 }
 
 const defaultValue: IAppDataContextValue = {
+  isLoadingWallets: true,
+  wallets: [],
   priceQuotes: []
 }
 

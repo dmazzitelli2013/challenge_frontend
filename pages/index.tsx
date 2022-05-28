@@ -5,14 +5,11 @@ import { BaseLayout } from '@components/templates'
 import { WalletList } from '@components/organisms'
 import { useBreakpoint } from '@hooks'
 import { APIAddWallet } from '@services/API'
-import { Wallet } from '@services/API/types'
 
 interface IAddWalletWrapper {
   children: ReactNode
   isDesktop: boolean
 }
-
-const walletsData: Wallet[] = []
 
 const AddWalletWrapper = ({ children, isDesktop }: IAddWalletWrapper) => {
   if (isDesktop)
@@ -42,7 +39,7 @@ const Home: NextPage = () => {
   const showErrorMessage = errorMessage.length > 0
   const handleChange = (event: any) => setWalletValue(event.target.value)
 
-  const addWallet = async () => {
+  /* const addWallet = async () => {
     setLoading(true)
     const response = await APIAddWallet(walletValue)
     if ('message' in response) {
@@ -57,7 +54,7 @@ const Home: NextPage = () => {
       setErrorMessage('')
     }
     setLoading(false)
-  }
+  } */
 
   return (
     <BaseLayout>
@@ -80,14 +77,14 @@ const Home: NextPage = () => {
           <Button
             maxW="200px"
             fontSize={{ base: 'xs', lg: 'md' }}
-            onPress={addWallet}
+            // onPress={addWallet}
             disabled={walletValue.length === 0}
           >
             Add Wallet
           </Button>
         )}
       </AddWalletWrapper>
-      <WalletList data={walletsData} />
+      <WalletList />
     </BaseLayout>
   )
 }

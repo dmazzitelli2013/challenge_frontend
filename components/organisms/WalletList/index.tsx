@@ -1,27 +1,15 @@
 import { Heading, HStack, Spinner, VStack } from 'native-base'
-import { useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { WalletCard } from '@components/organisms'
-import { APIGetWallets } from '@services/API'
-import { Wallet } from '@services/API/types'
+import { AppDataContext } from '@context'
 
-interface IWalletList {
-  data: Wallet[]
-}
-
-const WalletList = ({ data }: IWalletList) => {
-  const [isLoading, setLoading] = useState(true)
-
-  useEffect(() => {
-    ;(async () => {
-      const fetchedData = await APIGetWallets()
-      fetchedData.forEach((wallet) => data.push(wallet))
-      setLoading(false)
-    })()
-  }, [])
+const WalletList = () => {
+  const appDataContext = useContext(AppDataContext)
+  const { isLoadingWallets, wallets } = appDataContext 
 
   return (
     <VStack mt={12} space={8} alignItems="center" pb={8}>
-      {isLoading ? (
+      {isLoadingWallets ? (
         <HStack space={2} justifyContent="center">
           <Spinner accessibilityLabel="Loading wallets" />
           <Heading color="primary.500" fontSize="md">
@@ -30,7 +18,7 @@ const WalletList = ({ data }: IWalletList) => {
         </HStack>
       ) : (
         <>
-          {data.map((wallet) => (
+          {wallets.map((wallet) => (
             <WalletCard
               key={wallet.id}
               data={wallet}

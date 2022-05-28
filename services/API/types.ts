@@ -5,7 +5,6 @@ interface Wallet {
   isFavorite: boolean
   createdAt: string
   updatedAt: string
-  balance?: string
 }
 
 interface PriceQuote {
