@@ -51,7 +51,15 @@ const ClientAppDataProvider: React.FC = ({ children }) => {
     return result
   }
 
-  const callAPIUpdatePriceQuote = async (id: number, newPrice: number) => APIUpdatePriceQuote(id, newPrice)
+  const sortWallets = async (field: string, sort: 'asc' | 'desc') => {
+    setIsLoading(true)
+    const fetchedData = await APIGetWallets(field, sort)
+    setWallets(fetchedData)
+    setIsLoading(false)
+  }
+
+  const callAPIUpdatePriceQuote = async (id: number, newPrice: number) =>
+    APIUpdatePriceQuote(id, newPrice)
 
   const updatePriceQuote = async (id: number, newPrice: number) => {
     const updatePriceQuotes = fetchedPriceQuotes.map((priceQuote) => {
@@ -81,6 +89,7 @@ const ClientAppDataProvider: React.FC = ({ children }) => {
         priceQuotes: fetchedPriceQuotes,
         addWallet,
         addWalletIsLoading,
+        sortWallets,
         updatePriceQuote,
       }}
     >

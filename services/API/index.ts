@@ -14,8 +14,18 @@ const APIAddWallet = async (inputAddress: string): Promise<Wallet | Error> => {
     .catch((error) => error)
 }
 
-const APIGetWallets = async (): Promise<Wallet[]> => {
-  const fullURL = `${APIConfig.API_URL}/wallets`
+const APIGetWallets = async (
+  sortField?: string,
+  sortMode?: string
+): Promise<Wallet[]> => {
+  let queryString = ''
+  if (sortField) {
+    queryString += `?field=${sortField}`
+    if (sortMode) {
+      queryString += `&sort=${sortMode}`
+    }
+  }
+  const fullURL = `${APIConfig.API_URL}/wallets${queryString}`
   return fetch(fullURL)
     .then((response) => response.json())
     .catch(() => [])

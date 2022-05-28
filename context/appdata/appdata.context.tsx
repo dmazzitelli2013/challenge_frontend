@@ -7,6 +7,7 @@ interface IAppDataContextValue {
   priceQuotes: PriceQuote[]
   addWallet(address: string): any
   addWalletIsLoading: boolean
+  sortWallets(field: string, sort: 'asc' | 'desc'): any
   updatePriceQuote(id: number, value: number): any
 }
 
@@ -16,6 +17,7 @@ const defaultValue: IAppDataContextValue = {
   priceQuotes: [],
   addWallet: () => {},
   addWalletIsLoading: false,
+  sortWallets: () => {},
   updatePriceQuote: () => {}
 }
 
